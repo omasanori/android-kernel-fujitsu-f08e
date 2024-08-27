@@ -1,0 +1,2 @@
+config TSPDRV
+	tristate "TouchSense driver support"

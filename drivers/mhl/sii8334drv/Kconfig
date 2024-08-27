@@ -1,0 +1,5 @@
+config SII8334_MHL_TX
+    bool "Memory device driver"
+    default y
+    help
+      The SII8334_MHL_TX driver

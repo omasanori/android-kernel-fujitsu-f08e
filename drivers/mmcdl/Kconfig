@@ -1,0 +1,6 @@
+#
+# mmc dl configuration
+#
+config MMCDL
+	tristate "MMC DL data read/write support"
+

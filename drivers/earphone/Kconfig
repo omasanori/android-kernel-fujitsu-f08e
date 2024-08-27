@@ -1,0 +1,6 @@
+menu "Fujitsu Earphone Device Control support"
+
+config FUJITSU_EDC
+	tristate "Fujitsu Earphone Device Control Driver"
+	default y
+endmenu

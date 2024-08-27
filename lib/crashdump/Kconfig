@@ -1,0 +1,94 @@
+config CRASHDUMP_APP
+	bool "Dump log when application crashes"
+	default y
+
+config CRASHDUMP
+	bool "Dump log when crash occurs"
+	default n
+	depends on !KEXEC
+	select FRAME_POINTER
+
+	if CRASHDUMP
+		config CRASHDUMP_BINDER_DIR
+			string "Path of binder log"
+			default "/sys/kernel/debug"
+			help
+				Specify the path where binder log is located.
+				Possibilities are /proc, /debug, /sys/kernel/debug, /d.
+
+		choice
+			prompt "Where to dump"
+			default CRASHDUMP_TO_FLASH
+
+			config CRASHDUMP_TO_CONSOLE
+				bool "Console"
+				select DEBUG_LL
+				help
+					Say 'Y' if you wish to use console device.
+
+			config CRASHDUMP_TO_FLASH
+				bool "Flash"
+				depends on MTD || RFS_FSR || BLOCK
+				help
+					Say 'Y' if you wish to use flash device.
+		endchoice
+
+		if CRASHDUMP_TO_FLASH
+			choice
+				prompt "Flash Type"
+				default CRASHDUMP_TO_FLASH_BLKDEV
+
+				config CRASHDUMP_TO_FLASH_MTD
+					bool "MTD"
+					depends on MTD
+					help
+						Say 'Y' if you wish to use MTD device.
+
+				config CRASHDUMP_TO_FLASH_BML_BLKDEV
+					bool "LinuStoreIII - use BML block device"
+					depends on RFS_FSR
+					help
+						Say 'Y' if you wish to use BML block device.
+
+				config CRASHDUMP_TO_FLASH_BML_BLKDEV_NUM
+					string "LinuStoreIII - BML block device number"
+					default "6"
+					depends on CRASHDUMP_TO_FLASH_BML_BLKDEV
+					help
+						Specify LinuStoreIII - BML block device number.
+						Specify "6" if you use "/dev/block/bml6". 
+
+				config CRASHDUMP_TO_FLASH_BLKDEV
+					bool "BLKDEV"
+					depends on BLOCK
+					help
+						Say 'Y' if you wish to use block device.
+
+				config CRASHDUMP_TO_FLASH_BLKDEV_PATH
+					string "Full path of BLKDEV"
+					default "/dev/block/mmcblk0p32"
+					depends on CRASHDUMP_TO_FLASH_BLKDEV
+					help
+						Specify the full path of block device.
+						Example "/dev/block/mmcblk0p32".
+						!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+						This is currently unused.
+						Block device named "crashdump" will be used instead.
+						If you want to specify block device here,
+						you have to comment out
+						#define FINDBLKDEV_BYNAME
+						in crashdump_write.c
+						!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+			endchoice
+
+			config CRASHDUMP_PART_NAME
+				string "Partition Name for Crashdump"
+				default "mmcblk0p32"
+				help
+					Specify the devicename of flash-device.
+					Example for eMMC "mmcblk0p32".
+					Example for NAND "kernellog".
+			
+		endif
+	endif

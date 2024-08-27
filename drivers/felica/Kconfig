@@ -1,0 +1,14 @@
+config FELICA
+	tristate "FeliCa chip GPIO port Driver"
+	default y
+	---help---
+	  Say Y here if you want to enable felica chip GPIO port driver.
+
+	  To compile this driver as a module, choose M here. The module will
+	  be called felica_cen.
+
+config FELICA_DEBUG
+	tristate "FeliCa Driver Debug-mode"
+	default y
+	---help---
+	  Say Y here if you want to enable FeliCa driver Debug-mode.

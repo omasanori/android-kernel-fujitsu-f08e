@@ -1,0 +1,11 @@
+menuconfig FUJITSU_DRV
+	bool "Fujitsu drivers"
+	default y
+
+#/* FUJITSU:2012-12-25 IrDA_Driver add start */
+config IRDA_FJ
+	tristate "IrDA chip GPIO port Driver"
+	default y
+	---help---
+	  Say Y here if you want to enable IrDA driver.
+#/* FUJITSU:2012-12-25 IrDA_Driver add end */

@@ -1,0 +1,6 @@
+menu "Fujitsu tmc112if support"
+
+config FUJITSU_TMC112IF
+	tristate "Fujitsu tmc112if Interface Driver"
+	default y
+endmenu

@@ -1,0 +1,6 @@
+config COMPASS
+	tristate "Compass driver support"
+	default y
+	help
+	  Say Y here to enable based compass support.
+

@@ -1,0 +1,9 @@
+menu "Fujitsu WAVE-IF support"
+
+config FUJITSU_WAVEIF
+	tristate "Fujitsu WAVE Interface Driver"
+	select VOIP_CLEARLY
+	default y
+config VOIP_CLEARLY
+	bool
+endmenu
